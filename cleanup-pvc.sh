@@ -1,13 +1,13 @@
 #!/bin/bash 
-for dir in "pv-*/" ; do
-    buildDir=${dir%/}
-    echo "Dir is $dir"
-    echo "Checking for PipelineRun $buildDir"
-    if  oc get pr "$buildDir" 2>/dev/null >/dev/null; then
-        echo PR "$buildDir exists, leave PVC" 
-    else
-        echo PR "$buildDir does not exist, rm  PVC" 
-        rm -rf $buildDir
+for dir in * ; do 
+    if [ -d "$dir" ]; then    
+        echo "Checking for PipelineRun $dir"
+        if  oc get pr "$dir" 2>/dev/null >/dev/null; then
+            echo PR "$dir exists, leave PVC" 
+        else
+            echo PR "$dir does not exist, rm  PVC" 
+            rm -rf $dir
+        fi 
     fi 
 done
   
